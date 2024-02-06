@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <div class="container mt-5">
+    <form class="col-6 mx-auto card p-3 shadow-lg" action="" method="post" enctype="multipart/form-data">
+       {%csrf_token%} 
+       <h2>Add Receipe</h2>
+      <div class="mb-3 ">
+       <label for="exampleInputEmail1"
+       class="form-label">Recipe Name</label>
+       <input name="reciepe_name" required type="text" class="form-control" >
+       
+      </div>
+    <div class="mb-3">
+     <label for="exampleInputPassword1" class="form-label">Recipe Description</label>
+     <textarea name="reciepe_description" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Recipe Image</label>
+      <input name="reciepe_image" type="file" class="form-control" id="exampleCheck1">
+    </div>
+     <button type="submit" class="btn btn-success">Add Receipe</button>
+    </form>
+    
+    <div class="mt-5">
+     <div class="mx-auto col-6">
+      <form action="{%url 'search_results' %}" method="GET">
+       <label for="exampleInputEmail1"
+       class="form-label">Search your food</label>
+       <input name="search" type="text" class="form-control" >
+       
+      </div>
+             <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+     
+  
+       {% comment %} {{recipes}} {% endcomment %}
+
+       <table class="table mt-5">
+   <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Recipe Name</th>
+      <th scope="col">Recipe Description</th>
+      <th scope="col">Recipe Image</th>
+    </tr>
+   </thead>
+   <tbody>
+   {%for recipe in recipes %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{recipe.recipe_name}}</td>
+      <td>{{recipe.recipe_description}}</td>
+      <td><img src="/media/{{recipe.recipe_image}}"></td>
+      <td>
+       <a href='/delete-recipe/{{recipe.id}}'class="btn btn-danger m-2">Delete</a>
+       <a href='/update-recipe/{{recipe.id}}'class="btn btn-success">Update</a>
+      </td>
+    </tr>
+    {%endfor%}
+   </tbody>
+   </table>
+  </div>
+ </body>
+</html>
